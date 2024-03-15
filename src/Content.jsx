@@ -13,12 +13,19 @@ export function Content() {
       setPosts(response.data);
     });
   };
+  const handleCreatePost = (params, successCallback) => {
+    axios.post("http://localhost:3000/posts.json", params).then((response) => {
+      setPosts([...posts, response.data]);
+      successCallback();
+    });
+  };
   useEffect(handleIndexPosts, []);
+
   return (
     <div>
       <p>welcome to react</p>
       <PostsIndex posts={posts} />
-      <PostsNew />
+      <PostsNew onCreatePost={handleCreatePost} />
     </div>
   );
 }
